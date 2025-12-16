@@ -108,7 +108,7 @@ export default async function ArticlePage({ params }: PageProps) {
     .catch(() => {});
 
   // Fetch related articles
-  let relatedPosts = [];
+  let relatedPosts: Awaited<ReturnType<typeof prisma.post.findMany>> = [];
   try {
     relatedPosts = await prisma.post.findMany({
       where: {
