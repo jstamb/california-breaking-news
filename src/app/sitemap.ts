@@ -3,7 +3,9 @@ import { prisma } from '@/lib/prisma';
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://californiabreakingnews.com';
 
-export const revalidate = 3600; // Revalidate every hour
+// Force dynamic rendering - don't cache at build time
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let posts: { slug: string; updatedAt: Date; category: string }[] = [];

@@ -12,21 +12,8 @@ interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-// Generate static params for most recent posts (SSG)
-export async function generateStaticParams() {
-  try {
-    const posts = await prisma.post.findMany({
-      where: { isPublished: true },
-      select: { slug: true },
-      orderBy: { publishedAt: 'desc' },
-      take: 100,
-    });
-
-    return posts.map((post) => ({ slug: post.slug }));
-  } catch {
-    return [];
-  }
-}
+// Force dynamic rendering - don't cache at build time
+export const dynamic = 'force-dynamic';
 
 // Generate metadata for SEO
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -83,7 +70,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 }
 
-export const revalidate = 3600; // ISR: Revalidate every hour
+export const revalidate = 0;
 
 export default async function ArticlePage({ params }: PageProps) {
   const { slug } = await params;

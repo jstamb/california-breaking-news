@@ -7,7 +7,9 @@ export const metadata: Metadata = {
   description: 'Browse all California breaking news articles and stories.',
 };
 
-export const revalidate = 3600;
+// Force dynamic rendering - don't cache at build time
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 async function getPosts() {
   try {

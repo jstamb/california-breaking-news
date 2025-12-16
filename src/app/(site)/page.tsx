@@ -3,7 +3,9 @@ import { prisma } from '@/lib/prisma';
 import { ArticleCard } from '@/components/news/ArticleCard';
 import { Button } from '@/components/ui/button';
 
-export const revalidate = 3600; // Revalidate every hour
+// Force dynamic rendering - don't cache at build time
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 async function getPosts() {
   try {
