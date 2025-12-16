@@ -1,0 +1,58 @@
+// prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Post {
+  id            String    @id @default(cuid())
+  slug          String    @unique
+  title         String
+  excerpt       String    @db.Text
+  content       String    @db.Text
+  featuredImage String?
+  imageAlt      String?
+  category      String
+  tags          String[]
+  author        String    @default("Staff Reporter")
+  isBreaking    Boolean   @default(false)
+  isPublished   Boolean   @default(true)
+  publishedAt   DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  createdAt     DateTime  @default(now())
+
+  // SEO fields
+  metaTitle       String?
+  metaDescription String?
+  canonicalUrl    String?
+
+  // Analytics
+  viewCount     Int       @default(0)
+
+  @@index([publishedAt(sort: Desc)])
+  @@index([category])
+  @@index([isBreaking])
+  @@index([isPublished])
+}
+
+model SitemapEntry {
+  id          String   @id @default(cuid())
+  url         String   @unique
+  lastmod     DateTime
+  changefreq  String   @default("daily")
+  priority    Float    @default(0.7)
+  createdAt   DateTime @default(now())
+}
+
+model ApiKey {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  name        String
+  isActive    Boolean  @default(true)
+  lastUsed    DateTime?
+  createdAt   DateTime @default(now())
+}

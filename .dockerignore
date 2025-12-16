@@ -1,0 +1,54 @@
+# Dependencies
+node_modules
+npm-debug.log*
+
+# Next.js build output
+.next
+out
+
+# Testing
+coverage
+
+# Environment files (except example)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Git
+.git
+.gitignore
+
+# Logs
+logs
+*.log
+
+# Build info
+.npmrc
+.yarnrc
+
+# Documentation
+*.md
+!README.md
+
+# Old Vite files (to be cleaned up)
+vite.config.ts
+index.html
+index.tsx
+App.tsx
+constants.ts
+types.ts
+/components
+/pages
+/services
