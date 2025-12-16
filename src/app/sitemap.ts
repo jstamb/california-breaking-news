@@ -23,7 +23,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }
 
   // Get unique categories
-  const categories = [...new Set(posts.map((p) => p.category))];
+  const categories = Array.from(new Set(posts.map((p) => p.category)));
 
   // Static pages
   const staticPages: MetadataRoute.Sitemap = [
