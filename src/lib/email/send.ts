@@ -7,7 +7,8 @@ interface SendEmailOptions {
   to: string;
   subject: string;
   html: string;
-  type: 'welcome' | 'verify' | 'weekly_digest' | 'breaking';
+  type: 'welcome' | 'verify' | 'weekly_digest' | 'breaking' | 'contact' | 'contact-confirmation';
+  replyTo?: string;
 }
 
 interface ResendResponse {
@@ -15,25 +16,31 @@ interface ResendResponse {
   error?: { message: string };
 }
 
-export async function sendEmail({ to, subject, html, type }: SendEmailOptions): Promise<{ success: boolean; messageId?: string; error?: string }> {
+export async function sendEmail({ to, subject, html, type, replyTo }: SendEmailOptions): Promise<{ success: boolean; messageId?: string; error?: string }> {
   if (!RESEND_API_KEY) {
     console.error('RESEND_API_KEY is not configured');
     return { success: false, error: 'Email service not configured' };
   }
 
   try {
+    const emailPayload: Record<string, unknown> = {
+      from: FROM_EMAIL,
+      to: [to],
+      subject,
+      html,
+    };
+
+    if (replyTo) {
+      emailPayload.reply_to = replyTo;
+    }
+
     const response = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${RESEND_API_KEY}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        from: FROM_EMAIL,
-        to: [to],
-        subject,
-        html,
-      }),
+      body: JSON.stringify(emailPayload),
     });
 
     const data: ResendResponse = await response.json();

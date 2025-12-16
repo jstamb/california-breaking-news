@@ -90,9 +90,9 @@ export function Header() {
           </div>
           <div className="flex-1 flex justify-center">
             <Link href="/" className="flex flex-col items-center group">
-              <h1 className="text-3xl md:text-5xl lg:text-6xl font-black tracking-tighter uppercase text-black dark:text-white group-hover:opacity-80 transition-opacity text-center">
+              <h2 className="text-[1.75rem] font-black tracking-tighter uppercase text-black dark:text-white group-hover:opacity-80 transition-opacity text-center">
                 {SITE_NAME}
-              </h1>
+              </h2>
               <span className="text-[10px] md:text-xs tracking-[0.3em] uppercase text-muted-foreground mt-1">
                 Voice of the Golden State
               </span>
