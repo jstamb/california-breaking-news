@@ -53,20 +53,24 @@ export function ArticleCard({
             priority={priority}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
-          <div className="absolute bottom-0 left-0 p-6 text-white">
+          {/* Stronger gradient overlay for better text readability */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/20" />
+          <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6">
             <span
               className={cn(
-                'inline-block px-2 py-1 text-xs font-bold uppercase tracking-wider text-white mb-2',
+                'inline-block px-2 py-1 text-[10px] md:text-xs font-bold uppercase tracking-wider text-white mb-2',
                 catColor
               )}
             >
               {post.category}
             </span>
-            <h3 className="text-xl md:text-2xl font-bold leading-tight mb-2 text-white group-hover:text-primary-foreground/90 transition-colors">
+            <h3
+              className="text-base md:text-lg lg:text-xl font-bold leading-snug mb-2 text-white line-clamp-3 drop-shadow-lg"
+              style={{ textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}
+            >
               {post.title}
             </h3>
-            <div className="flex items-center text-xs text-gray-300 space-x-2">
+            <div className="flex items-center text-[10px] md:text-xs text-gray-200 space-x-2">
               <span>{new Date(post.publishedAt).toLocaleDateString()}</span>
               <span>&bull;</span>
               <span>{post.author}</span>
