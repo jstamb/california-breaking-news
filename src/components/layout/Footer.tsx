@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { Facebook, Twitter, Youtube } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { NewsletterForm } from '@/components/newsletter/NewsletterForm';
 
 const SITE_NAME = 'California Breaking News';
 
@@ -65,16 +65,9 @@ export function Footer() {
               Newsletter
             </h3>
             <p className="text-sm text-muted-foreground mb-4">
-              Subscribe to our mailing list to get the new updates!
+              Get weekly California news delivered to your inbox!
             </p>
-            <form className="space-y-2" onSubmit={(e) => e.preventDefault()}>
-              <input
-                type="email"
-                placeholder="Your email address"
-                className="w-full px-3 py-2 text-sm border rounded-sm focus:outline-none focus:border-primary bg-gray-50 dark:bg-zinc-800 dark:border-zinc-700 dark:text-white"
-              />
-              <Button className="w-full uppercase font-bold text-xs">Subscribe</Button>
-            </form>
+            <NewsletterForm variant="default" />
           </div>
 
           <div>

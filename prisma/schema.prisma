@@ -56,3 +56,36 @@ model ApiKey {
   lastUsed    DateTime?
   createdAt   DateTime @default(now())
 }
+
+model Subscriber {
+  id              String    @id @default(cuid())
+  email           String    @unique
+  firstName       String?
+  lastName        String?
+  isVerified      Boolean   @default(false)
+  isActive        Boolean   @default(true)
+  verifyToken     String?   @unique
+  unsubscribeToken String   @unique @default(cuid())
+  preferences     String[]  @default(["breaking", "weekly"])
+  lastEmailSent   DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([email])
+  @@index([isActive])
+  @@index([isVerified])
+}
+
+model EmailLog {
+  id          String   @id @default(cuid())
+  email       String
+  subject     String
+  type        String   // "welcome", "verify", "weekly_digest", "breaking"
+  status      String   @default("sent") // "sent", "failed", "bounced"
+  messageId   String?
+  createdAt   DateTime @default(now())
+
+  @@index([email])
+  @@index([type])
+  @@index([createdAt(sort: Desc)])
+}
