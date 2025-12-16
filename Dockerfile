@@ -35,8 +35,8 @@ RUN npm run build
 FROM base AS runner
 WORKDIR /app
 
-# Install OpenSSL for Prisma
-RUN apk add --no-cache openssl
+# Install OpenSSL for Prisma and dependencies for Sharp
+RUN apk add --no-cache openssl vips-dev
 
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
@@ -59,6 +59,9 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 # Copy Prisma client
 COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
+
+# Copy Sharp for image optimization
+COPY --from=builder /app/node_modules/sharp ./node_modules/sharp
 
 # Switch to non-root user
 USER nextjs
