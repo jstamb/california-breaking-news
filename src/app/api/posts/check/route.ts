@@ -38,17 +38,19 @@ function extractKeywords(title: string): Set<string> {
 function calculateSimilarity(set1: Set<string>, set2: Set<string>): number {
   if (set1.size === 0 || set2.size === 0) return 0;
 
-  const intersection = new Set([...set1].filter(x => set2.has(x)));
-  const union = new Set([...set1, ...set2]);
+  const arr1 = Array.from(set1);
+  const arr2 = Array.from(set2);
+  const intersection = arr1.filter(x => set2.has(x));
+  const union = new Set(arr1.concat(arr2));
 
-  return intersection.size / union.size;
+  return intersection.length / union.size;
 }
 
 /**
  * Check if titles share significant keywords (for catching near-duplicates)
  */
 function getSharedKeywords(set1: Set<string>, set2: Set<string>): string[] {
-  return [...set1].filter(x => set2.has(x));
+  return Array.from(set1).filter(x => set2.has(x));
 }
 
 export async function POST(request: NextRequest) {
@@ -108,7 +110,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       isDuplicate,
       inputTitle: title,
-      inputKeywords: [...inputKeywords],
+      inputKeywords: Array.from(inputKeywords),
       threshold,
       bestMatch,
       similarPosts,
