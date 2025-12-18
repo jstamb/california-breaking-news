@@ -89,3 +89,14 @@ model EmailLog {
   @@index([type])
   @@index([createdAt(sort: Desc)])
 }
+
+model LinkUsage {
+  id          String   @id @default(cuid())
+  domain      String   @unique
+  useCount    Int      @default(1)
+  lastUsed    DateTime @default(now())
+  createdAt   DateTime @default(now())
+
+  @@index([domain])
+  @@index([lastUsed])
+}
